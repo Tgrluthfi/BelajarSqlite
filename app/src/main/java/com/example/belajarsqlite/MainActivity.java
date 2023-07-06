@@ -62,29 +62,34 @@ public class MainActivity extends AppCompatActivity {
                     //mhsList.add(new MhsModel( -1,isian_nama, isian_nim, isian_noHp));
 
                     boolean stts ;
-                    if(!isEdit){
-                        mm = new MhsModel( -1,isian_nama, isian_nim, isian_noHp);
-                        stts = db.simpan(mm);
 
-                        edNama.setText("");
-                        edNim.setText("");
-                        edNoHp.setText("");
+                    mhsList = db.list();
+                    if (mhsList.size() >=5) {
+                        Toast.makeText(getApplicationContext(), "Data sudah penuh", Toast.LENGTH_SHORT).show();
+                    } else {
 
-                    }else{
-                        mm = new MhsModel( mm.getId(),isian_nama, isian_nim, isian_noHp);
-                        stts = db.ubah(mm);
+                        if (!isEdit) {
+                            mm = new MhsModel(-1, isian_nama, isian_nim, isian_noHp);
+                            stts = db.simpan(mm);
+
+                            edNama.setText("");
+                            edNim.setText("");
+                            edNoHp.setText("");
+
+                        } else {
+                            mm = new MhsModel(mm.getId(), isian_nama, isian_nim, isian_noHp);
+                            stts = db.ubah(mm);
+                        }
+
+
+                        if (stts) {
+
+                            Toast.makeText(getApplicationContext(), "data berhasil di simpan", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "data gagal di simpan", Toast.LENGTH_SHORT).show();
+                        }
+
                     }
-
-
-                    if(stts){
-
-                        Toast.makeText(getApplicationContext(),"data berhasil di simpan", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getApplicationContext(),"data gagal di simpan", Toast.LENGTH_SHORT).show();
-                    }
-
-
-
                     //intent_list.putParcelableArrayListExtra("mhsList", mhsList );
                     //startActivity(intent_list);
                 }
